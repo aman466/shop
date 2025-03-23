@@ -3,15 +3,14 @@ const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
+require('dotenv').config();
 
 const User = require("../models/user");
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
-      // api_key: process.env.SENDGRID_API_KEY,
-      api_key:
-        "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",
+      api_key: process.env.SENDGRID_API_KEY,
     },
   })
 );
@@ -148,7 +147,7 @@ exports.postReset = (req, res, next) => {
       .then(() => {
         // Ensure response is sent only once
         if (!res.headersSent) {
-          res.redirect("/new-password");
+          res.redirect("/");
         }
       })
       .catch((err) => {
